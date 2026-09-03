@@ -4,14 +4,39 @@ import { Reveal } from './Reveal';
 import { contactInfo } from '@/data';
 
 export function Contact() {
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
   const [form, setForm] = useState({ name: '', email: '', message: '' });
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSent(true);
-    setForm({ name: '', email: '', message: '' });
-    setTimeout(() => setSent(false), 4000);
+    setStatus('sending');
+    setErrorMessage('');
+
+    const formData = new FormData(e.currentTarget);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...form,
+          website: formData.get('website') ?? '',
+        }),
+      });
+      const result = (await response.json()) as { error?: string };
+
+      if (!response.ok) {
+        throw new Error(result.error || 'No se pudo enviar el mensaje.');
+      }
+
+      setStatus('sent');
+      setForm({ name: '', email: '', message: '' });
+      setTimeout(() => setStatus('idle'), 4000);
+    } catch (error) {
+      setStatus('error');
+      setErrorMessage(error instanceof Error ? error.message : 'No se pudo enviar el mensaje.');
+    }
   };
 
   const contactCards = [
@@ -75,6 +100,10 @@ export function Contact() {
               className="rounded-3xl border border-rose-soft/20 bg-white p-7 shadow-card sm:p-9"
             >
               <div className="space-y-5">
+                <div className="absolute -left-[10000px]" aria-hidden="true">
+                  <label htmlFor="website">Sitio web</label>
+                  <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+                </div>
                 {/* Name */}
                 <div>
                   <label htmlFor="name" className="mb-2 flex items-center gap-2 text-sm font-semibold text-ink">
@@ -129,14 +158,16 @@ export function Contact() {
                 {/* Submit */}
                 <button
                   type="submit"
-                  disabled={sent}
+                  disabled={status === 'sending' || status === 'sent'}
                   className="group flex w-full items-center justify-center gap-2.5 rounded-full bg-rose-soft px-7 py-3.5 text-sm font-semibold text-white shadow-soft transition-all duration-300 hover:bg-rose-deep hover:shadow-card hover:-translate-y-0.5 disabled:cursor-default disabled:from-rose-deep disabled:to-rose-deep"
                 >
-                  {sent ? (
+                  {status === 'sent' ? (
                     <>
                       <CheckCircle2 className="h-4 w-4" />
                       ¡Mensaje enviado!
                     </>
+                  ) : status === 'sending' ? (
+                    'Enviando…'
                   ) : (
                     <>
                       <Send className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
@@ -144,6 +175,11 @@ export function Contact() {
                     </>
                   )}
                 </button>
+                {status === 'error' && (
+                  <p role="alert" className="text-center text-sm font-medium text-red-600">
+                    {errorMessage}
+                  </p>
+                )}
               </div>
             </form>
           </Reveal>
