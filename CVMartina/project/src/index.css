@@ -5,16 +5,33 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    overflow-x: clip;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   body {
-    @apply bg-cream text-ink font-sans;
+    @apply min-w-0 overflow-x-clip bg-cream font-sans text-ink;
+  }
+
+  #root {
+    min-width: 0;
+    overflow-x: clip;
   }
 
   ::selection {
     @apply bg-rose-soft/30 text-ink;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 

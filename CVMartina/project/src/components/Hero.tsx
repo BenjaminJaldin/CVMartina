@@ -6,7 +6,7 @@ export function Hero() {
   return (
     <section
       id="inicio"
-      className="relative flex min-h-screen items-center justify-center overflow-hidden px-5 pt-28 pb-16 sm:px-8"
+      className="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-4 pb-12 pt-24 sm:min-h-screen sm:px-8 sm:pb-16 sm:pt-28"
     >
       {/* Decorative background */}
       <div className="pointer-events-none absolute inset-0 -z-10">
@@ -18,7 +18,7 @@ export function Hero() {
       <div className="mx-auto w-full max-w-4xl">
         <Reveal animation="scale-in" className="relative">
           {/* Card */}
-          <div className="relative overflow-hidden rounded-[2rem] border border-rose-soft/25 bg-rose-mist/60 p-8 shadow-float backdrop-blur-xl sm:p-12 lg:p-16">
+          <div className="relative overflow-hidden rounded-3xl border border-rose-soft/25 bg-rose-mist/60 p-5 shadow-float backdrop-blur-xl sm:rounded-[2rem] sm:p-12 lg:p-16">
             {/* Top accent line */}
             <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-rose-soft to-transparent" />
 
@@ -31,7 +31,7 @@ export function Hero() {
             </div>
 
             {/* Name */}
-            <h1 className="text-center font-display text-3xl font-bold leading-tight tracking-tight text-ink sm:text-5xl lg:text-6xl">
+            <h1 className="text-center font-display text-[2rem] font-bold leading-tight tracking-tight text-ink sm:text-5xl lg:text-6xl">
               Martina Belén
               <br />
               <span className="gradient-text">Espinoza Vargas</span>
@@ -40,13 +40,14 @@ export function Hero() {
             {/* Subtitle */}
             <p className="mt-5 text-center text-sm font-medium leading-relaxed text-ink-soft sm:text-base lg:text-lg">
               Estudiante de Ingeniería en Administración de Empresas
-              <span className="mx-2 text-rose-soft">|</span>
-              Gestión Administrativa
-              <span className="mx-2 text-rose-soft">|</span>
-              Marketing
-              <span className="mx-2 text-rose-soft">|</span>
-              Atención al Cliente
             </p>
+            <ul className="mx-auto mt-3 flex max-w-xl flex-wrap justify-center gap-2 text-xs font-semibold text-rose-deep sm:text-sm">
+              {['Gestión Administrativa', 'Marketing', 'Atención al Cliente'].map((specialty) => (
+                <li key={specialty} className="rounded-full border border-rose-soft/30 bg-white/65 px-3 py-1.5">
+                  {specialty}
+                </li>
+              ))}
+            </ul>
 
             {/* Divider */}
             <div className="mx-auto my-7 h-px w-32 bg-gradient-to-r from-transparent via-rose-soft to-transparent" />
@@ -59,7 +60,8 @@ export function Hero() {
             {/* Buttons */}
             <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
               <a
-                href="#contacto"
+                href="/CV-Martina-Espinoza.pdf"
+                download="CV-Martina-Espinoza.pdf"
                 className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-rose-soft px-7 py-3.5 text-sm font-semibold text-white shadow-soft transition-all duration-300 hover:bg-rose-deep hover:shadow-card hover:-translate-y-0.5 sm:w-auto"
               >
                 <Download className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5" />

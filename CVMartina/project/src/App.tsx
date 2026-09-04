@@ -11,7 +11,7 @@ function Footer() {
   return (
     <footer className="border-t border-rose-soft/20 bg-rose-mist/30 px-5 py-10 sm:px-8">
       <div className="mx-auto flex max-w-5xl flex-col items-center gap-4 sm:flex-row sm:justify-between">
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2.5 text-center sm:text-left">
           <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-rose-mist to-rose-soft shadow-soft">
             <Briefcase className="h-4 w-4 text-rose-deep" strokeWidth={2.2} />
           </span>
@@ -19,7 +19,7 @@ function Footer() {
             Martina Belén Espinoza Vargas
           </span>
         </div>
-        <p className="flex items-center gap-1.5 text-xs font-medium text-ink-muted">
+        <p className="flex flex-wrap items-center justify-center gap-1.5 text-center text-xs font-medium text-ink-muted">
           Diseñado con
           <Heart className="h-3.5 w-3.5 text-rose-soft" fill="currentColor" />
           para procesos de selección

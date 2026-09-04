@@ -5,22 +5,29 @@ type RevealProps = {
   className?: string;
   delay?: number;
   animation?: 'fade-up' | 'fade-in' | 'scale-in';
-  as?: keyof JSX.IntrinsicElements;
 };
+
+const shouldSkipAnimation = () =>
+  typeof window !== 'undefined' &&
+  (window.innerWidth < 640 || window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
 export function Reveal({
   children,
   className = '',
   delay = 0,
   animation = 'fade-up',
-  as: Tag = 'div',
 }: RevealProps) {
-  const ref = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(shouldSkipAnimation);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    if (shouldSkipAnimation()) {
+      setVisible(true);
+      return;
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -36,10 +43,8 @@ export function Reveal({
     return () => observer.disconnect();
   }, []);
 
-  const Component = Tag as any;
-
   return (
-    <Component
+    <div
       ref={ref}
       className={`${className} transition-all will-change-transform`}
       style={{
@@ -48,6 +53,6 @@ export function Reveal({
       }}
     >
       {children}
-    </Component>
+    </div>
   );
 }

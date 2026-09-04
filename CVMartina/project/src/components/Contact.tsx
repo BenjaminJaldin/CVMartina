@@ -72,11 +72,11 @@ export function Contact() {
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-rose-mist to-rose-petal shadow-soft transition-transform duration-300 group-hover:scale-105">
                       <Icon className="h-5 w-5 text-rose-deep" strokeWidth={2} />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
                         {card.label}
                       </p>
-                      <p className="mt-0.5 text-sm font-medium text-ink">
+                      <p className="mt-0.5 break-words text-sm font-medium text-ink">
                         {card.value}
                       </p>
                     </div>
@@ -97,7 +97,7 @@ export function Contact() {
           <Reveal className="lg:col-span-3" delay={200}>
             <form
               onSubmit={handleSubmit}
-              className="rounded-3xl border border-rose-soft/20 bg-white p-7 shadow-card sm:p-9"
+              className="relative rounded-3xl border border-rose-soft/20 bg-white p-5 shadow-card sm:p-9"
             >
               <div className="space-y-5">
                 <div className="absolute -left-[10000px]" aria-hidden="true">
