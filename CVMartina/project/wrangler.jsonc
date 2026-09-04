@@ -2,6 +2,9 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "cv-martina",
   "pages_build_output_dir": "./dist",
-  "compatibility_date": "2026-09-03"
+  "compatibility_date": "2026-09-03",
+  "vars": {
+    "CONTACT_TO_EMAIL": "martibelenespi@gmail.com",
+    "CONTACT_FROM_EMAIL": "Martina CV <onboarding@resend.dev>"
+  }
 }
-
